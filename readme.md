@@ -1,5 +1,5 @@
 # Github Blog
-<img src="https://imgur.com/a/GbvyuNJ">
+<img src="https://i.imgur.com/o5DeLq8.gif">
 Github Blog é o terceiro desafio da Trilha ReactJS da rocketseat
 
 ## Funcionalidades
