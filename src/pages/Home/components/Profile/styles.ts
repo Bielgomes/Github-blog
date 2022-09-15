@@ -21,7 +21,9 @@ export const ProfileContent = styled.div`
 
 export const ProfileInfo = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
+  justify-content: space-between;
 
   h1 {
     font-weight: 1.5rem;
@@ -31,7 +33,9 @@ export const ProfileInfo = styled.div`
 
     padding-bottom: 0.5rem;
   }
+`
 
+export const ProfileGroup = styled.div`
   span {
     line-height: 160%;
   }
@@ -43,33 +47,8 @@ export const Name = styled.div`
   align-items: center;
 `
 
-export const Link = styled.a`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  color: ${(props) => props.theme['brand-blue']};
-
-  font-size: 0.75rem;
-  font-weight: bold;
-  text-decoration: none;
-
-  border-bottom: 1px solid transparent;
-
-  &:hover {
-    border-bottom: 1px solid ${(props) => props.theme['brand-blue']};
-    transition: border 0.2s;
-  }
-
-  span {
-    display: flex;
-    padding: 0.218rem 0;
-  }
-`
-
 export const InfoGroup = styled.div`
   display: flex;
-  margin-top: 1.5rem;
   gap: 1.5rem;
 `
 

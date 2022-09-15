@@ -1,6 +1,13 @@
 import styled from 'styled-components'
 
-export const IssueContainer = styled.article`
+export const IssueContainer = styled.div`
+  a {
+    text-decoration: none;
+    color: unset;
+  }
+`
+
+export const IssueContent = styled.article`
   height: 16.25rem;
   padding: 2rem;
   background-color: ${(props) => props.theme['base-post']};

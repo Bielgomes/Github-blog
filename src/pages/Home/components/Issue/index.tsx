@@ -1,27 +1,32 @@
-import { Header, IssueContainer } from './styles'
+import { Header, IssueContainer, IssueContent } from './styles'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { Link } from 'react-router-dom'
 
 interface IssueProps {
   id: number
-  name: string
+  title: string
   description: string
-  publishedAt: string
+  updatedAt: string
 }
 
-export function Issue({ id, name, description, publishedAt }: IssueProps) {
-  const formattedDate = formatDistanceToNow(new Date(publishedAt), {
+export function Issue({ id, title, description, updatedAt }: IssueProps) {
+  const formattedDate = formatDistanceToNow(new Date(updatedAt), {
     locale: ptBR,
     addSuffix: true,
   })
 
   return (
-    <IssueContainer onClick={console.log('click')}>
-      <Header>
-        <h3>{name}</h3>
-        <span>{formattedDate}</span>
-      </Header>
-      <p>{description}</p>
+    <IssueContainer>
+      <Link to={`/${id}`}>
+        <IssueContent>
+          <Header>
+            <h3>{title}</h3>
+            <span>{formattedDate}</span>
+          </Header>
+          <p>{description}</p>
+        </IssueContent>
+      </Link>
     </IssueContainer>
   )
 }

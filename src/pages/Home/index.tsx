@@ -1,53 +1,72 @@
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { api } from '../../lib/axios'
+
 import { Issue } from './components/Issue'
 import { Profile } from './components/Profile'
-import { SearchForm } from './components/SearchForm'
-import { HomeContainer, IssuesContainer } from './styles'
+import {
+  HomeContainer,
+  IssuesContainer,
+  Publications,
+  SearchFormContainer,
+} from './styles'
 
-const issues = [
-  {
-    id: 1,
-    name: 'JavaScript data types and data structures',
-    description:
-      'Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.',
-    publishedAt: '2022-09-13T17:41:48.258Z',
-  },
-  {
-    id: 2,
-    name: 'JavaScript data types and data structures',
-    description:
-      'Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.',
-    publishedAt: '2022-09-13T17:41:48.258Z',
-  },
-  {
-    id: 3,
-    name: 'JavaScript data types and data structures',
-    description:
-      'Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.',
-    publishedAt: '2022-09-13T17:41:48.258Z',
-  },
-  {
-    id: 4,
-    name: 'JavaScript data types and data structures',
-    description:
-      'Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in JavaScript and what properties they have. These can be used to build other data structures. Wherever possible, comparisons with other languages are drawn.',
-    publishedAt: '2022-09-12T17:41:48.258Z',
-  },
-]
+interface IssueType {
+  id: string
+  title: string
+  body: string
+  updated_at: string
+}
 
 export function Home() {
+  const [issues, setIssues] = useState<IssueType[]>([])
+  const { register, watch } = useForm()
+
+  const filter = watch('name')
+
+  const filteredissues = issues.filter((issue) => {
+    return issue.title.toLowerCase().includes(filter.toLowerCase())
+  })
+
+  async function getIssues() {
+    const response = await api.get('search/issues', {
+      params: {
+        q: `repo:Bielgomes/Github-blog`,
+      },
+    })
+
+    setIssues(response.data.items)
+  }
+
+  useEffect(() => {
+    getIssues()
+  }, [])
+
   return (
     <HomeContainer>
       <Profile />
-      <SearchForm />
+
+      <SearchFormContainer>
+        <Publications>
+          <h2>Publicações</h2>
+          <span>{issues.length} publicações</span>
+        </Publications>
+        <input
+          type="text"
+          placeholder="Buscar conteúdo"
+          {...register('name')}
+        />
+      </SearchFormContainer>
+
       <IssuesContainer>
-        {issues.map((issue) => {
+        {filteredissues.map((issue: any) => {
           return (
             <Issue
-              key={issue.id}
-              id={issue.id}
-              name={issue.name}
-              description={issue.description}
-              publishedAt={issue.publishedAt}
+              key={issue.number}
+              id={issue.number}
+              title={issue.title}
+              description={issue.body}
+              updatedAt={issue.updated_at}
             />
           )
         })}
